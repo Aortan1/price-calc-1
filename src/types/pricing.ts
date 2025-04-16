@@ -3,6 +3,7 @@ export interface PricingTier {
   credits: number[];
   monthly: number[];
   yearly: number[];
+  oneTime: number[];
 }
 
 export interface PricingData {
@@ -11,4 +12,4 @@ export interface PricingData {
   enterprise: PricingTier;
 }
 
-export type BillingPeriod = 'monthly' | 'yearly';
+export type BillingPeriod = 'monthly' | 'yearly' | 'oneTime';

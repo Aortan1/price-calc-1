@@ -10,21 +10,28 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: BillingPeriod): void;
 }>();
 
-const toggle = () => {
-  emit('update:modelValue', props.modelValue === 'monthly' ? 'yearly' : 'monthly');
+const periods: BillingPeriod[] = ['monthly', 'yearly', 'oneTime'];
+//const periods: BillingPeriod[] = ['monthly', 'yearly'];
+
+const handleClick = (period: BillingPeriod) => {
+  emit('update:modelValue', period);
 };
 </script>
 
 <template>
   <div class="billing-toggle">
-    <span :class="{ active: modelValue === 'monthly' }">Monthly</span>
-    <button @click="toggle" :class="{ 'is-yearly': modelValue === 'yearly' }">
-      <span class="slider"></span>
-    </button>
-    <span :class="{ active: modelValue === 'yearly' }">
-      Yearly
-      <span class="savings">Save 20%</span>
-    </span>
+    <div class="toggle-container">
+      <div class="slider" :class="modelValue"></div>
+      <button 
+        v-for="period in periods" 
+        :key="period"
+        :class="{ active: modelValue === period }"
+        @click="handleClick(period)"
+      >
+        {{ period === 'oneTime' ? 'One-time' : period.charAt(0).toUpperCase() + period.slice(1) }}
+        <span v-if="period === 'yearly'" class="savings">Save 20%</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -33,62 +40,69 @@ const toggle = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
   margin-bottom: 2rem;
+}
 
-  span {
-    color: #64748b;
-    transition: color 300ms ease;
+.toggle-container {
+  position: relative;
+  display: flex;
+  background: #e2e8f0;
+  border-radius: 1rem;
+  /*padding: 0.75rem 1rem;*/
+  padding: 0;
+  gap: 0.25rem;
+  min-width: 435px;
+}
 
-    &.active {
-      color: #0f172a;
+button {
+  position: relative;
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 300ms ease;
+  z-index: 1;
 
-    }
-
-    .savings {
-      font-size: 0.75rem;
-      background: #dbeafe;
-      color: #2563eb;
-      padding: 0.25rem 0.5rem;
-      border-radius: 1rem;
-      margin-left: 0.5rem;
-    }
+  &.active {
+    color: #0f172a;
+  }
+  &:focus{
+    outline: none!important;
   }
 
-  button {
-    position: relative;
-    width: 6rem;
-    height: 1.8rem;
+  .savings {
+    font-size: 0.75rem;
+    background: #dbeafe;
+    color: #2563eb;
+    padding: 0.25rem 0.5rem;
     border-radius: 1rem;
-    background: #efeeed;
-    transition: background-color 300ms ease;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+}
 
-    &:hover {
-      background: #cbd5e1;
-    }
-    &:focus{
-      outline: none!important;
-    }
+.slider {
+  position: absolute;
+  line-height: 1;
+  left: 0.25rem;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: calc(33.33% - 0.2rem);
+  background: white;
+  border-radius: 0.75rem;
+  transition: transform 300ms ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
-    .slider {
-      position: absolute;
-      left: 0.25rem;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1rem;
-      height: 1rem;
-      background: white;
-      border-radius: 50%;
-      transition: transform 300ms ease;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
 
-    &.is-yearly .slider {
-      transform: translate(calc(6rem - 1.5rem), -50%);
-    }
+
+  &.yearly {
+    transform: translateX(100%);
+  }
+
+  &.oneTime {
+    transform: translateX(200%);
   }
 }
 </style>

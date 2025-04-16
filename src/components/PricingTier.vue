@@ -10,9 +10,7 @@ const props = defineProps<{
 const selectedCreditIndex = ref(0);
 
 const price = computed(() => {
-  return props.period === 'monthly' 
-    ? props.tier.monthly[selectedCreditIndex.value]
-    : props.tier.yearly[selectedCreditIndex.value];
+  return props.tier[props.period][selectedCreditIndex.value];
 });
 
 const pricePerCredit = computed(() => {
@@ -27,7 +25,10 @@ const pricePerCredit = computed(() => {
     <div class="price">
       <span class="currency">$</span>
       <span class="amount">{{ price }}</span>
-      <span class="period">/{{ period }}</span>
+      <span class="period" v-if="period !== 'oneTime'">/{{ period=='monthly'?'month':period }}</span>
+    </div>
+    <div class="period-wrap">
+        <span class="period" v-if="period !== 'oneTime'">{{ period=='monthly'?'month':period }}</span>
     </div>
     <div class="credits">
       <select v-model="selectedCreditIndex">
@@ -48,8 +49,9 @@ const pricePerCredit = computed(() => {
   background: white;
   border-radius: 0.75rem;
   padding: 2rem;
-  text-align: center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  text-align: start;
+  border: 1px solid #e6e6e7;
+  /*box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);*/
   transition: transform 300ms ease;
 
   &:hover {
@@ -66,17 +68,21 @@ const pricePerCredit = computed(() => {
     font-size: 3rem;
     font-weight: bold;
     color: #0f172a;
-    margin-bottom: 1rem;
+
+    text-align: start;
 
     .currency {
-      font-size: 2.5rem;
-      /*vertical-align: super;*/
+      font-size: 3rem;
+      /*vertical-align: super*/;
     }
 
     .period {
       font-size: 1rem;
       color: #64748b;
     }
+  }
+  .period-wrap{
+    margin-bottom: 1rem;
   }
 
   .credits {
@@ -85,8 +91,9 @@ const pricePerCredit = computed(() => {
     select {
       width: 100%;
       padding: 0.75rem;
-      border-radius: 0.5rem;
-      border: 1px solid #e2e8f0;
+      border-radius: 0;
+      border: 1px solid transparent;
+      border-bottom: 2px solid black;
       font-size: 1rem;
       color: #0f172a;
       background: white;
@@ -94,7 +101,16 @@ const pricePerCredit = computed(() => {
       transition: border-color 300ms ease;
 
       &:hover {
-        border-color: #cbd5e1;
+        border-bottom-color: #cbd5e1;
+        outline: none;
+      }
+      &:focus{
+        outline: none;
+      }
+      option{
+        &:focus{
+
+        }
       }
     }
   }

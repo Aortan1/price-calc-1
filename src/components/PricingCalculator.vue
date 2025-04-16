@@ -9,19 +9,22 @@ const PRICING_DATA: PricingData = {
     name: 'Starter',
     credits: [500, 1000, 1500],
     monthly: [29, 54, 79],
-    yearly: [24, 45, 66]
+    yearly: [24, 45, 66],
+    oneTime: [290, 540, 790]
   },
   pro: {
     name: 'Pro',
     credits: [2000, 3500, 5000],
     monthly: [99, 169, 229],
-    yearly: [83, 141, 191]
+    yearly: [83, 141, 191],
+    oneTime: [990, 1690, 2290]
   },
   enterprise: {
     name: 'Enterprise',
     credits: [10000, 20000, 50000],
     monthly: [449, 799, 1899],
-    yearly: [374, 666, 1583]
+    yearly: [374, 666, 1583],
+    oneTime: [4490, 7990, 18990]
   }
 };
 
