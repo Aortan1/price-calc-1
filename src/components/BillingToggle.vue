@@ -10,6 +10,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: BillingPeriod): void;
 }>();
 
+
 const periods: BillingPeriod[] = ['monthly', 'yearly', 'oneTime'];
 //const periods: BillingPeriod[] = ['monthly', 'yearly'];
 
@@ -40,7 +41,8 @@ const handleClick = (period: BillingPeriod) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+
 }
 
 .toggle-container {
@@ -51,37 +53,39 @@ const handleClick = (period: BillingPeriod) => {
   /*padding: 0.75rem 1rem;*/
   padding: 0;
   gap: 0.25rem;
-  min-width: 435px;
+  width: 27.5rem;
+  max-width: 100%;
+  button {
+    position: relative;
+    flex: 1;
+    padding: 0.75rem 0.5rem;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 300ms ease;
+    z-index: 1;
+
+    &.active {
+      color: #0f172a;
+    }
+    &:focus{
+      outline: none!important;
+    }
+
+    .savings {
+      font-size: 0.75rem;
+      background: #dbeafe;
+      color: #2563eb;
+      padding: 0.25rem 0.5rem;
+      border-radius: 1rem;
+      margin-left: 0.5rem;
+    }
+  }
 }
 
-button {
-  position: relative;
-  flex: 1;
-  padding: 0.75rem 0.5rem;
-  border: none;
-  background: transparent;
-  color: #64748b;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 300ms ease;
-  z-index: 1;
 
-  &.active {
-    color: #0f172a;
-  }
-  &:focus{
-    outline: none!important;
-  }
-
-  .savings {
-    font-size: 0.75rem;
-    background: #dbeafe;
-    color: #2563eb;
-    padding: 0.25rem 0.5rem;
-    border-radius: 1rem;
-    margin-left: 0.5rem;
-  }
-}
 
 .slider {
   position: absolute;
@@ -103,6 +107,19 @@ button {
 
   &.oneTime {
     transform: translateX(200%);
+  }
+}
+
+@media (max-width: 767px) {
+  .toggle-container {
+    button{
+      padding: 0.75rem 0.25rem;
+      white-space: nowrap;
+      .savings{
+        margin-left: 0.2rem;
+        padding: 0.25rem 0.25rem;
+      }
+    }
   }
 }
 </style>
