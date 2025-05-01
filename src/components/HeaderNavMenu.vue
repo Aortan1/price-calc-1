@@ -122,9 +122,9 @@ const isMobileMenuOpen = ref(false);
 const expandedIndex = ref<number | null>(null);
 const mobileExpandedIndices = ref<number[]>([]);
 
-function toggleDropdown(index: number) {
-  expandedIndex.value = expandedIndex.value === index ? null : index;
-}
+//function toggleDropdown(index: number) {
+//  expandedIndex.value = expandedIndex.value === index ? null : index;
+//}
 function toggleMobileDropdown(index: number) {
   if (mobileExpandedIndices.value.includes(index)) {
     mobileExpandedIndices.value = mobileExpandedIndices.value.filter(i => i !== index);

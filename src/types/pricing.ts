@@ -36,10 +36,10 @@ const getC2 = (name: string):TypeCR => {
 }
 
 class Car {
-  name: str
+  name: string
   price: number
 
-  constructor(name: string, price:numbers){
+  constructor(name: string, price:number){
     this.name = name
     this.price = price
   }

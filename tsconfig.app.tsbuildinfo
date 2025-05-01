@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/types/pricing.ts","./src/App.vue","./src/components/BillingToggle.vue","./src/components/HeaderNavMenu.vue","./src/components/HelloWorld.vue","./src/components/PriceTransition.vue","./src/components/PricingCalculator.vue","./src/components/PricingTier.vue"],"version":"5.8.3"}

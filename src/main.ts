@@ -24,11 +24,11 @@ window.addEventListener('DOMContentLoaded', () => {
         const wrap = item.querySelector('.faq-ion-wrap');
 
         if (title && wrap) {
-            wrap.style.overflow = 'hidden';
-            wrap.style.transition = 'height 0.3s ease';
+            wrap['style'].overflow = 'hidden';
+            wrap['style'].transition = 'height 0.3s ease';
 
             // Hide by default
-            wrap.style.height = '0px';
+            wrap['style'].height = '0px';
 
             item.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
@@ -41,12 +41,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 if (!isActive) {
                     item.classList.add('active');
-                    wrap.style.height = wrap.scrollHeight + 'px';
+                    wrap['style'].height = wrap.scrollHeight + 'px';
                 }
                 /* Not hide others adding */
                 else {
                     item.classList.remove('active');
-                    wrap.style.height = '0px';
+                    wrap['style'].height = '0px';
                 }
             });
         }

@@ -127,8 +127,10 @@ const options ={
 }
 
 onMounted(() => {
-  document.querySelector('.splide__arrow--prev').innerHTML = '<span class="rr"><span class="arrow-span">←</span> Previous</span>';
-  document.querySelector('.splide__arrow--next').innerHTML = '<span>Next <span class="arrow-span">→</span></span>';
+  const ArrowToLeft = document.querySelector('.splide__arrow--prev')
+  const ArrowTORight = document.querySelector('.splide__arrow--next')
+  if (ArrowToLeft) ArrowToLeft.innerHTML = '<span class="rr"><span class="arrow-span">←</span> Previous</span>';
+  if (ArrowTORight) ArrowTORight.innerHTML = '<span>Next <span class="arrow-span">→</span></span>';
 })
 
 
@@ -139,7 +141,7 @@ onMounted(() => {
 <template>
   <div class="main-wrapper">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <header class="header">
       <HeaderNavMenu />
@@ -210,7 +212,7 @@ onMounted(() => {
             <template v-for="(cell, index) in feature.cells"
                       :index="index">
               <div class="cell">
-                <span class="cell-span" v-if="cell != null && typeof cell != 'boolean'"> {{ cell.toString() }} </span>
+                <span class="cell-span" v-if="cell != null && typeof cell != 'boolean'"> {{ cell }} </span>
                 <img class="cell-check-img" src="/check-grey.png" v-else-if="cell === true" alt="true">
               </div>
             </template>
@@ -238,7 +240,7 @@ onMounted(() => {
             <template v-for="(cell, index) in feature.cells"
                       :index="index">
               <div class="cell">
-                <span class="cell-span" v-if="cell != null && typeof cell != 'boolean'"> {{ cell.toString() }} </span>
+                <span class="cell-span" v-if="cell != null && typeof cell != 'boolean'"> {{ cell }} </span>
                 <img class="cell-check-img" src="/check-grey.png" v-else-if="cell === true" alt="true">
               </div>
             </template>
