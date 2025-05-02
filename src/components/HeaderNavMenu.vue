@@ -60,7 +60,7 @@
     </nav>
   </header>
     <!-- Mobile Menu -->
-    <transition name="fade-slide">
+    <Transition name="fade-slide">
       <div v-if="isMobileMenuOpen" class="nav-links-mobile md:hidden bg-white border-t border-gray-200 px-4 pb-4">
         <ul class="sub-menu-ul divide-y divide-gray-100">
           <li v-for="(item, index) in navItems" :key="item.label" class="py-2">
@@ -71,7 +71,7 @@
               {{ item.label }}
               <svg
                   class="w-4 h-4 transform transition-transform duration-300"
-                  :class="{ 'rotate-180': mobileExpandedIndices.includes(index) }"
+                  :class="{ 'rotate-180': mobileExpandedIndex === index }"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -79,25 +79,29 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            <transition name="fade-slide">
-              <ul v-show="mobileExpandedIndices.includes(index)" class="inner-menu-ul space-y-2 pl-4 overflow-hidden">
-                <li
-                    v-for="(sub, subIndex) in item.dropdown"
-                    :key="subIndex"
-                    class="flex items-start space-x-2"
-                >
-                  <a href="#" class="sub-menu-link">
-                    <div class="sub-icon-wrap">
-                      <component :is="sub.icon" class="sub-icon w-5 h-5 text-blue-500 mt-1" />
-                    </div>
-                    <div>
-                      <p class="item-title text-sm font-semibold text-gray-800">{{ sub.title }}</p>
-                      <p class="item-text text-xs text-gray-400">{{ sub.description }}</p>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </transition>
+
+            <!-- Плавное раскрытие -->
+            <Transition @enter="expandEnter" @leave="expandLeave">
+              <div v-show="mobileExpandedIndex === index" class="overflow-hidden">
+                <ul class="inner-menu-ul space-y-2 pl-4">
+                  <li
+                      v-for="(sub, subIndex) in item.dropdown"
+                      :key="subIndex"
+                      class="flex items-start space-x-2"
+                  >
+                    <a href="#" class="sub-menu-link">
+                      <div class="sub-icon-wrap">
+                        <component :is="sub.icon" class="sub-icon w-5 h-5 text-blue-500 mt-1" />
+                      </div>
+                      <div>
+                        <p class="item-title text-sm font-semibold text-gray-800">{{ sub.title }}</p>
+                        <p class="item-text text-xs text-gray-400">{{ sub.description }}</p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </Transition>
           </li>
         </ul>
         <div class="mt-4">
@@ -106,7 +110,7 @@
           </button>
         </div>
       </div>
-    </transition>
+    </Transition>
   </div>
 </template>
 
@@ -119,19 +123,49 @@ import { HomeIcon, BookIcon, UsersIcon, CogIcon, StarIcon } from 'lucide-vue-nex
 
 const isMobileMenuOpen = ref(false);
 
-const expandedIndex = ref<number | null>(null);
-const mobileExpandedIndices = ref<number[]>([]);
 
-//function toggleDropdown(index: number) {
-//  expandedIndex.value = expandedIndex.value === index ? null : index;
-//}
+//const mobileExpandedIndices = ref<number[]>([]);
+const mobileExpandedIndex = ref<number>(null);
+const expandedIndex = ref<number | null>(null);
+
+function toggleDropdown(index: number) {
+  expandedIndex.value = expandedIndex.value === index ? null : index;
+}
 function toggleMobileDropdown(index: number) {
+  mobileExpandedIndex.value = mobileExpandedIndex.value === index ? null : index;
+}
+/*
+function toggleMobileDropdown000(index: number) {
   if (mobileExpandedIndices.value.includes(index)) {
     mobileExpandedIndices.value = mobileExpandedIndices.value.filter(i => i !== index);
   } else {
     mobileExpandedIndices.value.push(index);
   }
 }
+*/
+
+function expandEnter(el: Element) {
+  const element = el as HTMLElement;
+  element.style.height = '0';
+  element.style.opacity = '0';
+  requestAnimationFrame(() => {
+    element.style.transition = 'height 0.3s ease, opacity 0.3s ease';
+    element.style.height = element.scrollHeight + 'px';
+    element.style.opacity = '1';
+  });
+}
+
+function expandLeave(el: Element) {
+  const element = el as HTMLElement;
+  element.style.height = element.scrollHeight + 'px';
+  element.style.opacity = '1';
+  requestAnimationFrame(() => {
+    element.style.transition = 'height 0.3s ease, opacity 0.3s ease';
+    element.style.height = '0';
+    element.style.opacity = '0';
+  });
+}
+
 
 const navItems = ref([
   {
