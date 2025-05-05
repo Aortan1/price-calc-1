@@ -26,9 +26,7 @@
             class="link-block relative group"
         >
           <button class="text-gray-700 hover:text-gray-900 font-medium">{{ item.label }}</button>
-          <div class="arrow-cont">
-            <div class="arrow"></div>
-          </div>
+          <ion-arrow></ion-arrow>
           <div
               class="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 ease-in-out z-10"
           >
@@ -120,6 +118,8 @@
 
 import { ref } from 'vue';
 import { HomeIcon, BookIcon, UsersIcon, CogIcon, StarIcon } from 'lucide-vue-next';
+import '/src/components/ion-arrow.js'
+//<div class="arrow-cont"><div class="arrow"></div></div>
 
 const isMobileMenuOpen = ref(false);
 
@@ -204,6 +204,9 @@ const navItems = ref([
     ],
   },
 ]);
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -358,6 +361,9 @@ button{
 @media (max-width: 991px) {
   .nav-links{
     display: none;
+  }
+  .nav-header{
+    padding: 0.0rem 0;
   }
 }
 </style>
